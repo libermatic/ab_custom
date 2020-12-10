@@ -11,6 +11,12 @@ def get_data():
                 {
                     "type": "report",
                     "is_query_report": True,
+                    "name": "Simple Sales Register",
+                    "doctype": "Sales Invoice",
+                },
+                {
+                    "type": "report",
+                    "is_query_report": True,
                     "name": "Simple Item-wise Sales Register",
                     "doctype": "Sales Invoice",
                 },
