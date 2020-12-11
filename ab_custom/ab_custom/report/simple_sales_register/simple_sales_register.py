@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from erpnext.accounts.report.sales_register.sales_register import (
     execute as sales_register,
 )
-from toolz.curried import compose, concatv, excepts, first, keyfilter
+from toolz.curried import compose, concatv, excepts, first, keyfilter, merge
 
 
 def execute(filters=None):
@@ -17,7 +17,6 @@ WHITELISTED_COLUMNS = [
     "invoice",
     "posting_date",
     "customer",
-    "customer_name",
     "grand_total",
     "rounded_total",
     "outstanding_amount",
@@ -26,7 +25,10 @@ WHITELISTED_COLUMNS = [
 
 def _get_columns(columns):
     pick_column = compose(
-        excepts(StopIteration, first, lambda _: None),
+        lambda x: x
+        if not x.get("fieldname") == "customer"
+        else merge(x, {"width": 300}),
+        excepts(StopIteration, first, lambda _: {}),
         lambda x: filter(lambda col: col.get("fieldname") == x, columns),
     )
 
@@ -34,4 +36,5 @@ def _get_columns(columns):
 
 
 def _get_data(data):
-    return [keyfilter(lambda x: x in WHITELISTED_COLUMNS, row) for row in data]
+    includes = WHITELISTED_COLUMNS + ["customer_name"]
+    return [keyfilter(lambda x: x in includes, row) for row in data]
