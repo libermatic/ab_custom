@@ -1,6 +1,6 @@
 {
   "name": "ab_custom",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Customizations for AB",
   "main": "ab_custom/public/js/index.js",
   "scripts": {
