@@ -1,7 +1,7 @@
 import * as reports from './reports';
 import * as extensions from './extensions';
 
-const __version__ = '0.0.6';
+const __version__ = '0.0.7';
 
 frappe.provide('ab_custom');
 ab_custom = { __version__, reports, extensions };
