@@ -12,3 +12,19 @@ frappe.form.link_formatters['Customer'] = function (value, doc) {
   }
   return value;
 };
+
+$(document).ajaxError(function (_event, jqXHR, ajaxSettings, thrownError) {
+  if (
+    jqXHR.status === 400 &&
+    jqXHR.responseJSON &&
+    jqXHR.responseJSON.exc_type === 'CSRFTokenError'
+  ) {
+    frappe.msgprint(
+      __(`
+        CSRF Token not invalid.
+        Subsequent requests will fail.
+        Manually browser <strong>REFRESH</strong> required to recover.
+      `)
+    );
+  }
+});
