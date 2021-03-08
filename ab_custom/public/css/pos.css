@@ -18,15 +18,18 @@
 
 /* cart item detail column sizes */
 .cart-wrapper .list-item-table .list-item .list-item__content:nth-child(1) {
-  flex: 1 1 auto;
-}
-.cart-wrapper .list-item-table .list-item .list-item__content:nth-child(2) {
   flex: 0 1 96px;
 }
+.cart-wrapper .list-item-table .list-item .list-item__content:nth-child(2) {
+  flex: 1 1 auto;
+}
 .cart-wrapper .list-item-table .list-item .list-item__content:nth-child(3) {
-  flex: 0 1 48px;
+  flex: 0 1 96px;
 }
 .cart-wrapper .list-item-table .list-item .list-item__content:nth-child(4) {
+  flex: 0 1 48px;
+}
+.cart-wrapper .list-item-table .list-item .list-item__content:nth-child(5) {
   flex: 0 1 96px;
 }
 
