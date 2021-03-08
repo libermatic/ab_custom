@@ -7,8 +7,8 @@
   flex: 1 1 auto;
 }
 .pos .item-container {
-  width: 50%;
-  max-width: calc(3 * 182px + 2 * 15px);
+  width: 50% !important;
+  max-width: calc(3 * 10em + 2 * 15px) !important;
 }
 
 /* highlight color of selected item in cart */
