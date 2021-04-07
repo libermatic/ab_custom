@@ -1,0 +1,47 @@
+.point-of-sale-app {
+  > .items-selector {
+    grid-column: span 5 / span 5;
+  }
+  > .item-details-container {
+    grid-column: span 5 / span 5;
+  }
+  > .customer-cart-container {
+    grid-column: span 5 / span 5;
+  }
+  > .payment-container {
+    grid-column: span 5 / span 5;
+  }
+}
+
+.point-of-sale-app {
+  > .items-selector {
+    > .items-container {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 0;
+      > .item-wrapper {
+        border-radius: initial;
+        box-shadow: none;
+        border-top: 1px solid var(--border-color);
+        > .item-detail {
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          align-items: center;
+          > .item-name {
+            display: block;
+          }
+          .item-name--primary {
+            display: flex;
+            align-items: center;
+          }
+          .item-name--secondary {
+            color: var(--text-muted);
+          }
+          .item-rate {
+            white-space: nowrap;
+            padding-left: var(--padding-sm);
+          }
+        }
+      }
+    }
+  }
+}
