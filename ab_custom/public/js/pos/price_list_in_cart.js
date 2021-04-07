@@ -11,7 +11,7 @@ export default function price_list_in_cart(ItemCart) {
         if (item_data.price_list_rate !== item_data.rate) {
           $description.html(
             `<s>${fmt_money(item_data.price_list_rate)}</s>
-            <span style="font-size: var(--text-xs); background-color: var(--gray-300); padding: 2px var(--padding-sm); border-radius: var(--border-radius-sm);">
+            <span class="item-discount">
               ${item_data.discount_percentage}% off
             </span>`
           );

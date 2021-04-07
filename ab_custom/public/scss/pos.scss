@@ -1,3 +1,4 @@
+// modified_item_view: section layout widths
 .point-of-sale-app {
   > .items-selector {
     grid-column: span 5 / span 5;
@@ -13,6 +14,7 @@
   }
 }
 
+// modified_item_view
 .point-of-sale-app {
   > .items-selector {
     > .items-container {
@@ -39,6 +41,50 @@
           .item-rate {
             white-space: nowrap;
             padding-left: var(--padding-sm);
+          }
+        }
+      }
+    }
+  }
+}
+
+// item_idx
+.point-of-sale-app {
+  > .customer-cart-container {
+    > .cart-container {
+      > .abs-cart-container {
+        > .cart-items-section {
+          > .cart-item-wrapper {
+            > .item-serial {
+              margin-right: var(--margin-md);
+              font-size: var(--text-sm);
+              color: var(--gray-500);
+              font-weight: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// price_list_in_cart
+.point-of-sale-app {
+  > .customer-cart-container {
+    > .cart-container {
+      > .abs-cart-container {
+        > .cart-items-section {
+          > .cart-item-wrapper {
+            > .item-name-desc {
+              > .item-desc {
+                > .item-discount {
+                  font-size: var(--text-xs);
+                  background-color: var(--gray-300);
+                  padding: 2px var(--padding-sm);
+                  border-radius: var(--border-radius-sm);
+                }
+              }
+            }
           }
         }
       }
