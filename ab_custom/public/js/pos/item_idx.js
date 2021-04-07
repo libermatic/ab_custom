@@ -1,15 +1,17 @@
 import { makeExtension } from './utils';
 
-export default function item_idx(Cart) {
+export default function item_idx(ItemCart) {
   return makeExtension(
     'item_idx',
-    class CartWithItemIdx extends Cart {
-      get_item_html(item) {
-        const $result = $(super.get_item_html(item));
-        $result.find('.item-name').before(`
-          <div style="font-weight: normal; padding: 0 0.5em;">${item.idx}.</div>
+    class ItemCartWithItemIdx extends ItemCart {
+      render_cart_item(item_data, $item_to_update) {
+        super.render_cart_item(item_data, $item_to_update);
+        this.get_cart_item(item_data).find('.item-name').html(`
+          <span style="font-size: var(--text-sm); color: var(--gray-600); font-weight: normal; ">
+            ${item_data.idx}.
+          </span>
+          ${item_data.item_name}
         `);
-        return $result[0];
       }
     }
   );
