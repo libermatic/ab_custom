@@ -91,3 +91,16 @@
     }
   }
 }
+
+// editable-description
+.point-of-sale-app {
+  > .item-details-container {
+    > .item-display {
+      > .item-name-desc-price {
+        > .item-desc:hover {
+          color: var(--text-muted);
+        }
+      }
+    }
+  }
+}
