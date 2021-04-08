@@ -1,11 +1,17 @@
 import { compose } from 'ramda';
 
-import { pageOverrides, itemsOverrides, cartOverrides } from '../pos';
+import { selectorOverrides, detailOverrides, cartOverrides } from '../pos';
 
-const pos = {
-  page: compose(...pageOverrides),
-  items: compose(...itemsOverrides),
-  cart: compose(...cartOverrides),
+frappe.provide('ab_custom.pos');
+
+ab_custom.pos.override = function (ns) {
+  if (ns.ItemSelector) {
+    ns.ItemSelector = compose(...selectorOverrides)(ns.ItemSelector);
+  }
+  if (ns.ItemDetails) {
+    ns.ItemDetails = compose(...detailOverrides)(ns.ItemDetails);
+  }
+  if (ns.ItemCart) {
+    ns.ItemCart = compose(...cartOverrides)(ns.ItemCart);
+  }
 };
-
-export default pos;
