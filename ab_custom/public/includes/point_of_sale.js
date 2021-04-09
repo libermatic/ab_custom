@@ -8,10 +8,13 @@ frappe.pages['point-of-sale'].on_page_load = function (wrapper) {
   frappe.require(
     [
       'assets/js/point-of-sale.min.js',
+      'assets/js/posx-pos.min.js',
+      'assets/css/posx-pos.min.css',
       'assets/js/ab_custom-pos.min.js',
       'assets/css/ab_custom-pos.min.css',
     ],
     function () {
+      posx.pos.override(erpnext.PointOfSale);
       ab_custom.pos.override(erpnext.PointOfSale);
       wrapper.pos = new erpnext.PointOfSale.Controller(wrapper);
       window.cur_pos = wrapper.pos;
