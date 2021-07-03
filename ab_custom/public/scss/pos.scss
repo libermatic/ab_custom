@@ -36,7 +36,13 @@
             align-items: center;
           }
           .item-name--secondary {
+            display: flex;
+            align-items: center;
+            margin-top: 0.2em;
             color: var(--text-muted);
+            .indicator-pill {
+              margin-right: 1em;
+            }
           }
           .item-rate {
             white-space: nowrap;

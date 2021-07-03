@@ -8,16 +8,15 @@ export default function modified_item_view(ItemSelector) {
         const $result = $(super.get_item_html(item));
         $result.find('.item-display').remove();
 
-        const $indicator = $result.find('.item-name > .indicator');
+        const $qty = $result.find('.item-qty-pill').detach();
 
         $result.find('.item-name').html(`
           <div class="item-name--primary">
-            ${$indicator.wrap('<div />').parent().html()} ${item.item_name}
+            ${item.item_name}
           </div>
           <div class="item-name--secondary">
-            ${item.item_code} ·
-            ${item.actual_qty || 0}
-            ${item.stock_uom || ''}
+            ${$qty.html()}
+            <span>${item.item_code}</span>
           </div>
         `);
 
