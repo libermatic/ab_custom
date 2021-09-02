@@ -12,7 +12,6 @@ export default function no_search_reset(ItemSelector) {
         this.$component.off('click', '.item-wrapper');
         const me = this;
         this.$component.on('click', '.item-wrapper', function () {
-          console.log(this);
           const $item = $(this);
           const item_code = unescape($item.attr('data-item-code'));
           let batch_no = unescape($item.attr('data-batch-no'));
