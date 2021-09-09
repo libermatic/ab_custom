@@ -9,7 +9,8 @@ export default function editable_description(ItemDetails) {
         this._render_item_description(item);
         this.$item_description
           .css('cursor', 'pointer')
-          .click(() => this._edit_description(item));
+          .off('click')
+          .on('click', () => this._edit_description(item));
       }
 
       _render_item_description(item) {
