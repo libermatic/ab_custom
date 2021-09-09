@@ -61,3 +61,16 @@ export default function editable_description(ItemDetails) {
     }
   );
 }
+
+export function editable_description_cart(ItemCart) {
+  return makeExtension(
+    'editable_description_cart',
+    class ItemCartWithEditableDescription extends ItemCart {
+      render_cart_item(item_data, $item_to_update) {
+        const { description } = item_data;
+        super.render_cart_item(item_data, $item_to_update);
+        item_data.description = description;
+      }
+    }
+  );
+}
