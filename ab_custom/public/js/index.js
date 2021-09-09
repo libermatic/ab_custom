@@ -1,6 +1,6 @@
 import * as reports from './reports';
 
-const __version__ = '13.0.3';
+const __version__ = '13.1.0';
 
 frappe.provide('ab_custom');
 ab_custom = { __version__, reports };
