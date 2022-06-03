@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/libermatic/ab_custom/issues"
   },
-  "homepage": "https://github.com/libermatic/ab_custom#readme"
+  "homepage": "https://github.com/libermatic/ab_custom#readme",
+  "dependencies": {
+    "ramda": "^0.27.2"
+  }
 }
