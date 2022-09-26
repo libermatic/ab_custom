@@ -23,7 +23,7 @@ app_include_js = ["ab_custom.bundle.js"]
 # web_include_js = "/assets/ab_custom/js/ab_custom.js"
 
 # include js in page
-page_js = {"point-of-sale": "public/includes/point_of_sale.js"}
+# page_js = {"point-of-sale": "public/includes/point_of_sale.js"}
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
