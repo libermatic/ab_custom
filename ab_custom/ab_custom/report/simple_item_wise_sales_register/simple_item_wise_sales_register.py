@@ -1,7 +1,6 @@
 # Copyright (c) 2013, Libermatic and contributors
 # For license information, please see license.txt
 
-from __future__ import unicode_literals
 from erpnext.accounts.report.item_wise_sales_register.item_wise_sales_register import (
     execute as item_wise_sales_register,
 )

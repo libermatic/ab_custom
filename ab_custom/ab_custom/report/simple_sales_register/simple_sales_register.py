@@ -1,7 +1,6 @@
 # Copyright (c) 2013, Libermatic and contributors
 # For license information, please see license.txt
 
-from __future__ import unicode_literals
 import frappe
 from erpnext.accounts.report.sales_register.sales_register import (
     execute as sales_register,
