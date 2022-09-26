@@ -1,4 +1,0 @@
-frappe
-erpnext
-posx
-toolz
