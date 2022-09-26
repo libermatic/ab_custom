@@ -2,6 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
-frappe.query_reports[
-  'Simple Item-wise Sales Register'
-] = ab_custom.reports.simple_item_wise_sales_register();
+frappe.query_reports['Simple Item-wise Sales Register'] = {
+  onload: ab_custom.reports.load_filters_on_load('Item-wise Sales Register'),
+  filters: [],
+};
