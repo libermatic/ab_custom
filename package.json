@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/libermatic/ab_custom#readme",
   "dependencies": {
-    "ramda": "^0.27.2"
+    "ramda": "^0.28.0"
   }
 }
