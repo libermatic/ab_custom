@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe.query_builder.functions import IfNull
 from erpnext.accounts.report.sales_register.sales_register import (
     execute as sales_register,
 )
@@ -117,26 +118,37 @@ def _get_payments(invoices):
     if not invoices:
         return [], []
 
-    payments = frappe.db.sql(
-        """
-            SELECT
-                sip.mode_of_payment,
-                sip.amount,
-                sip.parent AS invoice
-            FROM `tabSales Invoice Payment` AS sip
-            WHERE sip.parent IN %(invoices)s
-            UNION ALL
-            SELECT
-                IFNULL(pe.mode_of_payment, 'Unknown') AS mode_of_payment,
-                per.allocated_amount AS amount,
-                per.reference_name AS invoice
-            FROM `tabPayment Entry Reference` AS per
-            LEFT JOIN `tabPayment Entry` AS pe ON pe.name = per.parent
-            WHERE pe.docstatus = 1 AND per.reference_name IN %(invoices)s
-        """,
-        values={"invoices": invoices},
-        as_dict=1,
+    SalesInvoicePayment = frappe.qb.DocType("Sales Invoice Payment")
+    PaymentEntryReference = frappe.qb.DocType("Payment Entry Reference")
+    PaymentEntry = frappe.qb.DocType("Payment Entry")
+
+    sales_invoice_query = (
+        frappe.qb.from_(SalesInvoicePayment)
+        .where(SalesInvoicePayment.parent.isin(invoices))
+        .select(
+            SalesInvoicePayment.mode_of_payment,
+            SalesInvoicePayment.amount,
+            SalesInvoicePayment.parent.as_("invoice"),
+        )
     )
+
+    payment_entry_query = (
+        frappe.qb.from_(PaymentEntryReference)
+        .left_join(PaymentEntry)
+        .on(PaymentEntry.name == PaymentEntryReference.parent)
+        .where(
+            (PaymentEntry.docstatus == 1)
+            & (PaymentEntryReference.reference_name.isin(invoices))
+        )
+        .select(
+            IfNull(PaymentEntry.mode_of_payment, "Unknown").as_("mode_of_payment"),
+            PaymentEntryReference.allocated_amount.as_("amount"),
+            PaymentEntryReference.reference_name.as_("invoice"),
+        )
+    )
+
+    # for some reason, the run() method of the union query doesn't work
+    payments = frappe.db.sql(sales_invoice_query * payment_entry_query, as_dict=1)
     mops = set([x.get("mode_of_payment") for x in payments])
     return payments, mops
 
@@ -156,4 +168,3 @@ def _get_more_details(invoices):
             ),
         ),
     )
-
