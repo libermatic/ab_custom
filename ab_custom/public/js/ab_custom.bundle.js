@@ -1,6 +1,5 @@
 import * as reports from './reports';
-
-const __version__ = '13.1.2';
+import { __version__ } from './version';
 
 frappe.provide('ab_custom');
 ab_custom = { __version__, reports };
@@ -11,4 +10,3 @@ frappe.form.link_formatters['Customer'] = function (value, doc) {
   }
   return value;
 };
-
