@@ -11,6 +11,24 @@ app_color = "grey"
 app_email = "info@libermatic.com"
 app_license = "MIT"
 
+fixtures = [
+    {
+        "doctype": "POS Asset",
+        "filters": {
+            "name": (
+                "in",
+                [
+                    "01-modified_item_view",
+                    "02-price_list_rate_in_cart",
+                    "03-item_idx",
+                    "04-editable_description",
+                    "04-editable_description_cart",
+                ],
+            ),
+        },
+    },
+]
+
 # Includes in <head>
 # ------------------
 

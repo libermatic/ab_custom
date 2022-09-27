@@ -1,0 +1,57 @@
+[
+ {
+  "asset_name": "01-modified_item_view",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "POS Asset",
+  "modified": "2022-09-27 04:23:12.062846",
+  "name": "01-modified_item_view",
+  "overriden_class": "ItemSelector",
+  "script": "get_item_html(item) {\n    const $result = $(super.get_item_html(item));\n    $result.find('.item-display').remove();\n\n    const $qty = $result.find('.item-qty-pill').detach();\n\n    $result.find('.item-name').html(`\n        <div class=\"item-name--primary\">${item.item_name}</div>\n        <div class=\"item-name--secondary\">\n            ${$qty.html()}\n            <span>${item.item_code}</span>\n        </div>\n    `);\n\n    return $result[0];\n}\n\nresize_selector(minimize) {\n    super.resize_selector(minimize);\n\n    minimize ? this.$component.css('display', 'none') : this.$component.css('display', 'flex');\n\n    this.$component.css('grid-column', 'span 5 / span 5');\n    this.$items_container.css(\n        'grid-template-columns',\n        'repeat(1, minmax(0, 1fr))'\n    );\n}",
+  "style": "/* modified_item_view: section layout widths */\n.point-of-sale-app > .items-selector {\n  grid-column: span 5 / span 5;\n}\n.point-of-sale-app > .item-details-container {\n  grid-column: span 5 / span 5;\n}\n.point-of-sale-app > .customer-cart-container {\n  grid-column: span 5 / span 5;\n}\n.point-of-sale-app > .payment-container {\n  grid-column: span 5 / span 5;\n}\n/* modified_item_view */\n.point-of-sale-app > .items-selector > .items-container {\n  grid-template-columns: repeat(1, minmax(0, 1fr));\n  gap: 0;\n}\n.point-of-sale-app > .items-selector > .items-container > .item-wrapper {\n  border-radius: initial;\n  box-shadow: none;\n  border-top: 1px solid var(--border-color);\n}\n.point-of-sale-app > .items-selector > .items-container > .item-wrapper > .item-detail {\n  flex-flow: row nowrap;\n  justify-content: space-between;\n  align-items: center;\n}\n.point-of-sale-app > .items-selector > .items-container > .item-wrapper > .item-detail > .item-name {\n  display: block;\n}\n.point-of-sale-app > .items-selector > .items-container > .item-wrapper > .item-detail .item-name--primary {\n  display: flex;\n  align-items: center;\n}\n.point-of-sale-app > .items-selector > .items-container > .item-wrapper > .item-detail .item-name--secondary {\n  display: flex;\n  align-items: center;\n  margin-top: 0.2em;\n  color: var(--text-muted);\n}\n.point-of-sale-app > .items-selector > .items-container > .item-wrapper > .item-detail .item-name--secondary .indicator-pill {\n  margin-right: 1em;\n}\n.point-of-sale-app > .items-selector > .items-container > .item-wrapper > .item-detail .item-rate {\n  white-space: nowrap;\n  padding-left: var(--padding-sm);\n}\n"
+ },
+ {
+  "asset_name": "02-price_list_rate_in_cart",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "POS Asset",
+  "modified": "2022-09-27 04:23:41.879670",
+  "name": "02-price_list_rate_in_cart",
+  "overriden_class": "ItemCart",
+  "script": "render_cart_item(item_data, $item_to_update) {\n    super.render_cart_item(item_data, $item_to_update);\n    const $description = this.get_cart_item(item_data).find('.item-desc');\n    $description.empty();\n    if (item_data.price_list_rate !== item_data.rate) {\n        $description.html(\n            `<s>${fmt_money(item_data.price_list_rate)}</s>\n            <span class=\"item-discount\">${Math.round(item_data.discount_percentage * 10) / 10}% off</span>`\n        );\n    }\n}",
+  "style": ".point-of-sale-app > .customer-cart-container > .cart-container > .abs-cart-container > .cart-items-section > .cart-item-wrapper > .item-name-desc > .item-desc > .item-discount {\n  font-size: var(--text-xs);\n  background-color: var(--gray-300);\n  padding: 2px var(--padding-sm);\n  border-radius: var(--border-radius-sm);\n}\n"
+ },
+ {
+  "asset_name": "03-item_idx",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "POS Asset",
+  "modified": "2022-09-27 04:23:54.005331",
+  "name": "03-item_idx",
+  "overriden_class": "ItemCart",
+  "script": "update_item_html(item, remove_item) {\n    super.update_item_html(item, remove_item);\n    if (remove_item) {\n        this.$cart_items_wrapper.find('.cart-item-wrapper > .item-serial').each(function(index) {\n            $(this).text(index + 1);\n        });\n    }\n}\nrender_cart_item(item_data, $item_to_update) {\n    super.render_cart_item(item_data, $item_to_update);\n    this.get_cart_item(item_data).find('.item-image').replaceWith(`\n        <div class=\"item-serial\">${item_data.idx}.</div>\n    `);\n}",
+  "style": ".point-of-sale-app > .customer-cart-container > .cart-container > .abs-cart-container > .cart-items-section > .cart-item-wrapper > .item-serial {\n  margin-right: var(--margin-md);\n  font-size: var(--text-sm);\n  color: var(--gray-500);\n  font-weight: normal;\n}\n"
+ },
+ {
+  "asset_name": "04-editable_description",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "POS Asset",
+  "modified": "2022-09-27 04:25:24.096341",
+  "name": "04-editable_description",
+  "overriden_class": "ItemDetails",
+  "script": "render_dom(item) {\n    super.render_dom(item);\n    this._render_item_description(item);\n    this.$item_description\n        .css('cursor', 'pointer')\n        .off('click')\n        .on('click', () => this._edit_description(item));\n    }\n\n_render_item_description(item) {\n    this.$item_description.html(`\n        <span>${item.description}</span>\n        <span class=\"edit-btn\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" fill=\"currentColor\">\n            <path d=\"M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z\" />\n        </svg>\n        </span>\n    `);\n}\n\n_edit_description(item) {\n    const dialog = new frappe.ui.Dialog({\n        title: `Updating Description for row # ${item.idx}`,\n        fields: [\n            {\n                fieldtype: 'Data',\n                label: 'Item Code',\n                default: item.item_code,\n                read_only: 1,\n            },\n            { fieldtype: 'Column Break' },\n            {\n                fieldtype: 'Data',\n                label: 'Item Name',\n                default: item.item_name,\n                read_only: 1,\n            },\n            { fieldtype: 'Section Break', label: 'Description' },\n            {\n                fieldtype: 'Text',\n                fieldname: 'description',\n                default: item.description,\n            },\n        ],\n    });\n    dialog.set_primary_action('OK', () => {\n        item.description = frappe.utils.html2text(dialog.get_value('description') || '');\n        dialog.hide();\n        this._render_item_description(item);\n    });\n    dialog.onhide = () => dialog.$wrapper.remove();\n    dialog.show();\n}",
+  "style": ".point-of-sale-app > .item-details-container > .item-display > .item-name-desc-price > .item-desc:hover {\n  color: var(--text-muted);\n}"
+ },
+ {
+  "asset_name": "04-editable_description_cart",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "POS Asset",
+  "modified": "2022-09-27 04:25:54.050100",
+  "name": "04-editable_description_cart",
+  "overriden_class": "ItemCart",
+  "script": "render_cart_item(item_data, $item_to_update) {\n    const { description } = item_data;\n    super.render_cart_item(item_data, $item_to_update);\n    item_data.description = description;\n}",
+  "style": null
+ }
+]
